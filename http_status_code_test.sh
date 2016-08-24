@@ -8,6 +8,7 @@ OPTIONS:
   -h, --help
   --status
   --debug
+  --
 EOL
     exit 1
 }
@@ -21,7 +22,7 @@ assert_same() {
 }
 
 fetch() {
-    curl_out=`curl -s -w "%{http_code}" -o /dev/null $url`
+    curl_out=`curl -s -w "%{http_code}" -o /dev/null $url $args`
     http_code=`echo "$curl_out" | cut -f1`
 
     return 0
@@ -30,6 +31,7 @@ fetch() {
 main() {
     status=""
     debug=false
+    args=""
     local argc=0
     local argv=()
 
@@ -44,6 +46,10 @@ main() {
                 ;;
             --debug)
                 debug=true
+                ;;
+            --)
+                shift
+                args=$*
                 ;;
             *)
                 argc=`expr $argc + 1`
