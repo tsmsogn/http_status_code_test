@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 usage() {
   cat <<EOL
 USAGE: $(basename $0) [OPTIONS...] url
